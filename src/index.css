@@ -1,3 +1,36 @@
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
+.list-name {
+  border-radius: 5px 5px 0 0;
+}
+
+.rounded {
+  border-radius: 30px !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.item-container:hover {
+  background-color: azure !important;
+  transform: scale(1.03);
+  -webkit-transition: all 0.5s ease-in-out 0s;
+}
+
+.list-container {
+  height: 80%;
+  overflow-y: auto;
+}
+
+.nav-scroller {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  /*  scrolling with mouse in phone*/
+  -webkit-overflow-scrolling: touch;
+}
+html {
+  overflow-x: hidden;
+}
+
+body {
+  height: 100%;
 }

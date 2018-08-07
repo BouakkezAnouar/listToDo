@@ -5,14 +5,37 @@ class ToDoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      rand: 0 + Math.random() * (8 - 0),
+      items: [
+        /*{
+          id: 0,
+          itemText: "learn react",
+          isChecked: false
+        }*/
+      ],
+
+      colors: [
+        "#74b9ff",
+        "#a29bfe",
+        "#fab1a0",
+        "#fd79a8",
+        "#55efc4",
+        "#fab1a0",
+        "#fdcb6e",
+        "#00cec9",
+        "#00b894"
+      ]
     };
   }
 
-  //fonction add
-  handleAdd = () => {
-    const toDo = document.querySelector("#todo");
-    const toDoText = document.querySelector("#todo");
+  //fonction add item
+  handleAdd = event => {
+    //chaque input de list a sa propr classe reliée de son id
+    let selector = ".input" + this.props.id;
+    console.log(selector);
+    const toDo = document.querySelector(selector);
+    const toDoText = document.querySelector(selector);
+    // if input vide so nothing
     if (toDoText.value === "") return;
     else {
       const items = [...this.state.items];
@@ -26,14 +49,13 @@ class ToDoList extends Component {
     toDo.value = "";
   };
 
-  //function delete
+  //function delete item
   handleDelete = itemId => {
     this.setState({
       items: this.state.items.filter(item => item.id !== itemId)
     });
-    console.log("deleted");
   };
-
+  //find the last id
   lastId() {
     const items = [...this.state.items];
     return items.reduce((max, item) => (item.id > max ? item.id : max), 0);
@@ -47,26 +69,37 @@ class ToDoList extends Component {
     this.setState({ items });
   };
 
+  //when press enter key add item without click to button add
+  handleEnterPress = e => {
+    if (e.key === "Enter") {
+      this.handleAdd();
+    }
+  };
+
   render() {
     return (
-      <div className="container-fluid my-3 col-md-4">
-        <header className="bg-primary text-center lead">Informatique</header>
+      <div className=" bg-light p-0 " id={this.props.id}>
+        <header
+          className="text-center lead"
+          style={{
+            backgroundColor: this.state.colors[Math.floor(this.state.rand)]
+          }}
+        >
+          {this.props.name}
+        </header>
         <div>
           <input
             type="text"
-            className="form-control mt-2"
-            id="todo"
+            className={"form-control mt-2 rounded input" + this.props.id}
             placeholder="add a to do "
+            onKeyPress={this.handleEnterPress}
           />
         </div>
-        <div className="to-do-list container bg-light p-3">
+        <div className="to-do-list bg-light p-3 ">
           {this.state.items.map((item, i) => (
             <ToDoItem
               key={i}
-              itemText={item.itemText}
-              isChecked={item.isChecked}
               onDelete={this.handleDelete}
-              id={item.id}
               onCheckChange={this.handleCheckChange}
               onClick={this.handleCheckChange}
               item={item}

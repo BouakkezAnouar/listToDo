@@ -1,68 +1,42 @@
 import React, { Component } from "react";
 
-class ToDoItem extends Component {
-  state = {};
-  render() {
-    return (
-      <div className="container-fluid bg-white border-bottom p-3 my-2  ">
-        <div className="row">
-          <div className="col-1">
-            <input
-              type="checkbox"
-              checked={this.props.isChecked && "checked"}
-              onChange={() => {
-                this.props.onCheckChange(this.props.item);
-              }}
-            />
-          </div>
-          <div
-            className="col-10 lead"
+const ToDoItem = props => {
+  return (
+    <div className="container-fluid bg-white border-bottom p-2 my-2 item-container">
+      <div className="row">
+        <div className="col-1">
+          <input
+            type="checkbox"
+            checked={props.item.isChecked && "checked"}
+            onChange={() => {
+              props.onCheckChange(props.item);
+            }}
+          />
+        </div>
+        <div
+          className="col-9 lead cursor-pointer text-item"
+          onClick={() => {
+            props.onCheckChange(props.item);
+          }}
+          style={{
+            textDecoration: props.item.isChecked ? "line-through" : "none",
+            color: props.item.isChecked && "grey"
+          }}
+        >
+          {props.item.itemText}
+        </div>
+        <div className="col-1">
+          <img
+            className="cursor-pointer"
+            src={require("../res/delete.png")}
             onClick={() => {
-              this.props.onCheckChange(this.props.item);
+              props.onDelete(props.item.id);
             }}
-            style={{
-              textDecoration: this.props.isChecked ? "line-through" : "none",
-              color: this.props.isChecked && "grey"
-            }}
-          >
-            {this.props.itemText}
-          </div>
-          <div className="col-1">
-            <button
-              className="btn sm-btn btn-danger"
-              onClick={() => {
-                this.props.onDelete(this.props.id);
-              }}
-            >
-              x
-            </button>
-          </div>
+          />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ToDoItem;
-
-/*  <div className="col-1 ">
-            <input
-              type="checkbox"
-              checked={this.props.isChecked && "checked"}
-              className="checkbox mr-2 "
-            />
-          </div>
-          <div>
-            <p
-              className="col-9"
-              className={"checkmark  " + this.props.isChecked && "checked"}
-            >
-              {this.props.itemText}
-            </p>
-          </div>
-          <div className="col-1">
-            <button type="button" className="btn btn-default btn-sm col-2 px-3">
-              <span className="glyphicon glyphicon-remove text-center" />x
-            </button>
-          </div>
-          */
